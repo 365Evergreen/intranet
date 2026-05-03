@@ -9,6 +9,7 @@ export default function FilesPage() {
   const { data, isLoading } = useQuery({
     queryKey: ['files'],
     queryFn: fetchFiles,
+    staleTime: 60 * 1000,
   })
 
   if (isLoading || !data) {

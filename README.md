@@ -183,10 +183,18 @@ Backend Functions require:
 GRAPH_CLIENT_ID=
 GRAPH_TENANT_ID=
 GRAPH_CLIENT_SECRET=
+GRAPH_MODE=hybrid
+GRAPH_NEWS_SITE_IDS=
+GRAPH_SEARCH_ENTITY_TYPES=site,listItem,driveItem
+GRAPH_CACHE_TABLE_NAME=GraphCache
 STORAGE_ACCOUNT=
 STORAGE_KEY=
 DIRECT_LINE_SECRET=
 ```
+
+- `GRAPH_MODE=hybrid` keeps the app responsive by using cache-backed seeded fallbacks when live Graph prerequisites are unavailable.
+- `GRAPH_NEWS_SITE_IDS` should contain one or more SharePoint site IDs for the news feed.
+- `STORAGE_ACCOUNT` and `STORAGE_KEY` enable persistent cross-instance Graph caching in Azure Table Storage.
 
 Frontend uses a minimal `.env`:
 

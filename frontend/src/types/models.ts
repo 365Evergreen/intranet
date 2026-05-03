@@ -30,11 +30,27 @@ export type DashboardUpdate = {
   summary: string
 }
 
+export type ContentStatus = {
+  source: 'graph' | 'seeded'
+  cacheLayer: 'memory' | 'persistent' | 'none'
+  cachedAt: string
+  expiresAt: string
+  isStale: boolean
+}
+
 export type DashboardSummary = {
   welcome: string
   highlights: Highlight[]
   quickLinks: NavigationItem[]
   updates: DashboardUpdate[]
+  news: NewsArticle[]
+  files: FileItem[]
+  suggestions: SearchResult[]
+  contentStatus: {
+    news: ContentStatus
+    files: ContentStatus
+    search: ContentStatus
+  }
 }
 
 export type NewsArticle = {

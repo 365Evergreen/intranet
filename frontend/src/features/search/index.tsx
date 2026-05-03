@@ -6,11 +6,12 @@ import { PageHeader } from '../../components/PageHeader'
 import { fetchSearch } from '../../services/intranetApi'
 
 export default function SearchPage() {
-  const [query, setQuery] = useState('hybrid search')
+  const [query, setQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState(query)
   const { data, isFetching } = useQuery({
     queryKey: ['search', submittedQuery],
     queryFn: () => fetchSearch(submittedQuery),
+    staleTime: submittedQuery ? 45 * 1000 : 5 * 60 * 1000,
   })
 
   return (

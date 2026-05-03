@@ -1,6 +1,8 @@
 import { app } from '@azure/functions'
-import { searchContent } from '../shared/dataStore'
+import { getClientPrincipal } from '../shared/auth'
 import { handleError, jsonResponse } from '../shared/errorHandler'
+import { buildGraphContext } from '../shared/graphClient'
+import { searchIntranet } from '../graph/searchAdapter'
 
 app.http('search', {
   methods: ['GET'],
@@ -9,7 +11,9 @@ app.http('search', {
   handler: async (request, context) => {
     try {
       const query = request.query.get('q') ?? ''
-      return jsonResponse(searchContent(query))
+      const requestContext = buildGraphContext(request, getClientPrincipal(request))
+      const results = await searchIntranet(requestContext, context, query)
+      return jsonResponse(results.value)
     } catch (error) {
       return handleError(context, error)
     }
