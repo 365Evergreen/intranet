@@ -4,18 +4,53 @@ import {
   Divider,
   Text,
 } from '@fluentui/react-components'
+import { useQueryClient } from '@tanstack/react-query'
 import { Navigation24Regular } from '@fluentui/react-icons'
 import { Outlet } from 'react-router-dom'
 import { ThemeToggleButton } from '../components/PageHeader'
 import { SidebarNav } from '../components/SidebarNav'
 import { useAuth } from '../hooks/useAuth'
 import { usePreferences } from '../hooks/usePreferences'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import {
+  fetchDashboard,
+  fetchFiles,
+  fetchNews,
+  fetchSearch,
+} from '../services/intranetApi'
 
 export function ShellLayout() {
   const { principal } = useAuth()
   const { preferences, updatePreferences } = usePreferences()
   const [isNavOpen, setIsNavOpen] = useState(true)
+  const queryClient = useQueryClient()
+
+  useEffect(() => {
+    if (!principal) {
+      return
+    }
+
+    void queryClient.prefetchQuery({
+      queryKey: ['dashboard'],
+      queryFn: fetchDashboard,
+      staleTime: 5 * 60 * 1000,
+    })
+    void queryClient.prefetchQuery({
+      queryKey: ['news'],
+      queryFn: fetchNews,
+      staleTime: 5 * 60 * 1000,
+    })
+    void queryClient.prefetchQuery({
+      queryKey: ['files'],
+      queryFn: fetchFiles,
+      staleTime: 60 * 1000,
+    })
+    void queryClient.prefetchQuery({
+      queryKey: ['search', ''],
+      queryFn: () => fetchSearch(''),
+      staleTime: 60 * 1000,
+    })
+  }, [principal, queryClient])
 
   return (
     <div className="shell">

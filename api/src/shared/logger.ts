@@ -7,3 +7,19 @@ export function logInfo(
 ) {
   context.info(message, data ?? {})
 }
+
+export function logWarning(
+  context: InvocationContext,
+  message: string,
+  data?: Record<string, unknown>,
+) {
+  context.warn(message, data ?? {})
+}
+
+export function logError(
+  context: InvocationContext,
+  message: string,
+  data?: Record<string, unknown>,
+) {
+  context.error(message, data ?? {})
+}

@@ -18,19 +18,39 @@ export type NavigationItem = {
   roles?: string[]
 }
 
+export type Highlight = {
+  label: string
+  value: string
+  trend: string
+}
+
+export type DashboardUpdate = {
+  id: string
+  title: string
+  summary: string
+}
+
+export type ContentStatus = {
+  source: 'graph' | 'seeded'
+  cacheLayer: 'memory' | 'persistent' | 'none'
+  cachedAt: string
+  expiresAt: string
+  isStale: boolean
+}
+
 export type DashboardSummary = {
   welcome: string
-  highlights: Array<{
-    label: string
-    value: string
-    trend: string
-  }>
+  highlights: Highlight[]
   quickLinks: NavigationItem[]
-  updates: Array<{
-    id: string
-    title: string
-    summary: string
-  }>
+  updates: DashboardUpdate[]
+  news: NewsArticle[]
+  files: FileItem[]
+  suggestions: SearchResult[]
+  contentStatus: {
+    news: ContentStatus
+    files: ContentStatus
+    search: ContentStatus
+  }
 }
 
 export type NewsArticle = {

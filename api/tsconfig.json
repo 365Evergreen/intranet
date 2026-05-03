@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "node16",
     "target": "es2022",
     "outDir": "dist",
     "rootDir": ".",
@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["es2022"],
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "vitest.config.ts"]
+  "include": ["src/**/*.ts", "vitest.config.mts"]
 }

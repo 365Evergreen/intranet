@@ -9,6 +9,7 @@ export default function NewsPage() {
   const { data, isLoading } = useQuery({
     queryKey: ['news'],
     queryFn: fetchNews,
+    staleTime: 5 * 60 * 1000,
   })
 
   if (isLoading || !data) {

@@ -1,14 +1,10 @@
 import { app } from '@azure/functions'
 import { getClientPrincipal } from '../shared/auth'
-import {
-  getFiles,
-  getNews,
-  getOrgNodes,
-  getTasks,
-  getUserProfile,
-} from '../shared/dataStore'
+import { getOrgNodes, getTasks, getUserProfile } from '../shared/dataStore'
 import { handleError, jsonResponse } from '../shared/errorHandler'
 import { buildGraphContext } from '../shared/graphClient'
+import { getRecentFiles } from '../graph/filesAdapter'
+import { getNewsFeed } from '../graph/newsAdapter'
 import { logInfo } from '../shared/logger'
 
 app.http('graph-news', {
@@ -17,8 +13,14 @@ app.http('graph-news', {
   route: 'graph/news',
   handler: async (request, context) => {
     try {
-      logInfo(context, 'Serving news feed', buildGraphContext(getClientPrincipal(request)))
-      return jsonResponse(getNews())
+      const requestContext = buildGraphContext(request, getClientPrincipal(request))
+      const news = await getNewsFeed(requestContext, context)
+      logInfo(context, 'Serving news feed', {
+        cacheLayer: news.cacheLayer,
+        source: news.source,
+        user: requestContext.principal.userDetails,
+      })
+      return jsonResponse(news.value)
     } catch (error) {
       return handleError(context, error)
     }
@@ -29,9 +31,11 @@ app.http('graph-files-recent', {
   methods: ['GET'],
   authLevel: 'anonymous',
   route: 'graph/files/recent',
-  handler: async (_, context) => {
+  handler: async (request, context) => {
     try {
-      return jsonResponse(getFiles())
+      const requestContext = buildGraphContext(request, getClientPrincipal(request))
+      const files = await getRecentFiles(requestContext, context)
+      return jsonResponse(files.value)
     } catch (error) {
       return handleError(context, error)
     }
