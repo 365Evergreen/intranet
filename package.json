@@ -1,0 +1,16 @@
+{
+  "name": "365evergreen-intranet",
+  "private": true,
+  "packageManager": "pnpm@10.27.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "swa start http://localhost:5173 --api-location api --run \"pnpm --filter frontend dev --host 0.0.0.0\"",
+    "infra:deploy": "pwsh -Command \"if (-not $env:AZURE_RESOURCE_GROUP) { throw 'Set AZURE_RESOURCE_GROUP' }; az deployment group create --resource-group $env:AZURE_RESOURCE_GROUP --template-file infra/main.bicep --parameters @infra/main.parameters.json\"",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "@azure/static-web-apps-cli": "^2.0.9",
+    "prettier": "^3.5.3"
+  }
+}

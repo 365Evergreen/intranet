@@ -1,0 +1,17 @@
+node_modules/
+
+frontend/node_modules/
+frontend/dist/
+
+api/node_modules/
+api/dist/
+api/local.settings.json
+
+.swa/
+coverage/
+playwright-report/
+test-results/
+
+.DS_Store
+
+.env
