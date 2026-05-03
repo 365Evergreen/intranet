@@ -195,6 +195,7 @@ DIRECT_LINE_SECRET=
 - `GRAPH_MODE=hybrid` keeps the app responsive by using cache-backed seeded fallbacks when live Graph prerequisites are unavailable.
 - `GRAPH_NEWS_SITE_IDS` should contain one or more SharePoint site IDs for the news feed.
 - `STORAGE_ACCOUNT` and `STORAGE_KEY` enable persistent cross-instance Graph caching in Azure Table Storage.
+- Detailed setup steps are in [`docs/graph-configuration.md`](docs/graph-configuration.md).
 
 Frontend uses a minimal `.env`:
 
