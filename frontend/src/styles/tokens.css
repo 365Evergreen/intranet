@@ -1,0 +1,20 @@
+:root {
+  --app-background: #f5f7fb;
+  --surface-background: #ffffff;
+  --surface-border: #d9e2f2;
+  --shell-header: #0f6cbd;
+  --shell-header-text: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #475467;
+  --shadow-soft: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='dark'] {
+  --app-background: #111827;
+  --surface-background: #1f2937;
+  --surface-border: #334155;
+  --shell-header: #172554;
+  --shell-header-text: #ffffff;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+}
